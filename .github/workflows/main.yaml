@@ -13,10 +13,17 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set up SSH agent
-      run: 
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.JIRA_LINT_DEPLOY_KEY }}'
+    - name: Create SSH key
+      env:
+        SSH_PRIVATE_KEY: ${{secrets.JIRA_LINT_DEPLOY_KEY}}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > private.key
+        sudo chmod 400 private.key
+
+    - name: Add SSH key to the agent
+      run: |
+        eval `ssh-agent -s`
+        ssh-add private.key
 
     - name: Checkout External Repository
       uses: actions/checkout@v2
