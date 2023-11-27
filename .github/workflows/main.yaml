@@ -1,4 +1,4 @@
-name: Run Jira Lint
+name: Jira Lint
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-program:
+  run-jira-lint:
     runs-on: ubuntu-latest
 
     steps:
