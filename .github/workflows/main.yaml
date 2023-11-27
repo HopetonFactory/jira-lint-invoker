@@ -13,17 +13,15 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Add SSH key to the agent
-      uses: webfactory/ssh-agent@v0.4.1
-      with:
-        ssh-private-key: ${{ secrets.JIRA_LINT_DEPLOY_KEY }}
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh/
+        echo "${{ secrets.JIRA_LINT_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-    - name: Checkout External Repository
-      uses: actions/checkout@v3
-      with:
-        repository: 'HopetonFactory/jira-lint'
-        ref: 'main'
-        path: 'jira-lint'
+    - name: Clone Repository
+      run: git clone git@github.com:HopetonFactory/jira-lint.git jira-lint
 
     - name: Set up Python
       uses: actions/setup-python@v2
