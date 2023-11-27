@@ -13,17 +13,10 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Create SSH key
-      env:
-        SSH_PRIVATE_KEY: ${{secrets.JIRA_LINT_DEPLOY_KEY}}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > private.key
-        sudo chmod 400 private.key
-
     - name: Add SSH key to the agent
-      run: |
-        eval `ssh-agent -s`
-        ssh-add private.key
+      uses: webfactory/ssh-agent@v0.4.1
+      with:
+        ssh-private-key: ${{ secrets.JIRA_LINT_DEPLOY_KEY }}
 
     - name: Checkout External Repository
       uses: actions/checkout@v3
