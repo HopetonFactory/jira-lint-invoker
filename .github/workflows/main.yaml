@@ -13,11 +13,15 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Set up SSH agent
+      run: 
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.JIRA_LINT_DEPLOY_KEY }}'
+
     - name: Checkout External Repository
       uses: actions/checkout@v2
       with:
         repository: 'HopetonFactory/jira-lint'
-        token: ${{ secrets.JIRA_LINT_ACCESS_TOKEN }}
         path: 'jira-lint'
 
     - name: Set up Python
