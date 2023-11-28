@@ -38,9 +38,10 @@ jobs:
 
     - name: Install dependencies with Poetry
       run: |
-        cd jira-lint/jira-lint
         poetry install
+      working-directory: jira-lint/jira-lint
 
     - name: Run Python program
       run: |
-        poetry run python jira_lint/main.py --api-key ${{ secrets.JIRA_API_TOKEN }} --jira-user ${{ secrets.JIRA_USER }}
+        poetry run python main.py --api-key ${{ secrets.JIRA_API_TOKEN }} --jira-user ${{ secrets.JIRA_USER }}
+      working-directory: jira-lint/jira-lint/jira_lint
