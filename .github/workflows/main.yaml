@@ -43,5 +43,5 @@ jobs:
 
     - name: Run Python program
       run: |
-        poetry run python main.py --api-key ${{ secrets.JIRA_API_TOKEN }} --jira-user ${{ secrets.JIRA_USER }}
+        poetry run python main.py --api-key ${{ secrets.JIRA_LINT_ACCESS_TOKEN }} --jira-user ${{ secrets.JIRA_USER }}
       working-directory: jira-lint/jira-lint/jira_lint
